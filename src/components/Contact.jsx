@@ -1,8 +1,9 @@
 import React from "react";
-
+import Card from "react-bootstrap/Card";
+import logo from "../assets/scam.png";
 function Contact() {
   return (
-    <>
+    <div>
       <h1
         name="contact"
         id="contact"
@@ -16,7 +17,15 @@ function Contact() {
       >
         Contact US
       </h1>
-    </>
+      <Card style={{ width: "18rem" }} className="p-2 mb-5">
+        <Card.Img variant="top" src={logo} />
+        <hr />
+        <Card.Body>
+          <Card.Title>Name</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">Position</Card.Subtitle>
+        </Card.Body>
+      </Card>
+    </div>
   );
 }
 

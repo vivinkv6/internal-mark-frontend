@@ -1,13 +1,14 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-
+import logo from "../assets/scam.png";
+import '../App.css';
 function ImageSlider() {
   return (
     <Carousel fade>
       <Carousel.Item>
         <img
-          className="d-block w-75"
-          src=""
+          className="Carousel d-block w-100"
+          src={logo}
           alt="First slide"
         />
         <Carousel.Caption>
@@ -18,7 +19,7 @@ function ImageSlider() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="holder.js/800x400?text=Second slide&bg=282c34"
+          src={logo}
           alt="Second slide"
         />
 
@@ -30,7 +31,7 @@ function ImageSlider() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="holder.js/800x400?text=Third slide&bg=20232a"
+          src={logo}
           alt="Third slide"
         />
 
