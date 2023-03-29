@@ -16,7 +16,7 @@ function App() {
      <Routes>
      <Route exact path='/' element={<UserPage/>}/>
       <Route path='admin' element={<AdminForm/>}/>
-      <Route path='admin/control' element={<AdminPage/>}/>
+      <Route path='admin/access' element={<AdminPage/>}/>
       </Routes> 
       <Footers/>
       </BrowserRouter>
