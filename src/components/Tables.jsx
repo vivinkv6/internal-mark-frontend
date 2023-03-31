@@ -5,7 +5,7 @@ function Tables() {
   return (
     <>
       <legend className="text-light fw-bold">Department - Semester</legend>
-      <Table responsive="md" border={1} striped bordered hover variant="dark">
+      <Table responsive="md" border={1} striped bordered hover variant="light">
         <thead>
           <tr>
             <th>Serial No</th>

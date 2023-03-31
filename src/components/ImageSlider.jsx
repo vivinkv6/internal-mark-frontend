@@ -6,22 +6,28 @@ function ImageSlider() {
   return (
     <Carousel fade>
       <Carousel.Item>
+        <center>
         <img
-          className="Carousel d-block w-100"
+          className="Carousel d-block"
+          style={{height:'400px',width:'400px'}}
           src={logo}
           alt="First slide"
         />
+        </center>
         <Carousel.Caption>
           <h3>First slide label</h3>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
+      <center>
         <img
-          className="d-block w-100"
+          className="Carousel d-block"
+          style={{height:'400px',width:'400px'}}
           src={logo}
-          alt="Second slide"
+          alt="First slide"
         />
+        </center>
 
         <Carousel.Caption>
           <h3>Second slide label</h3>
@@ -29,12 +35,14 @@ function ImageSlider() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
+      <center>
         <img
-          className="d-block w-100"
+          className="Carousel d-block"
+          style={{height:'400px',width:'400px'}}
           src={logo}
-          alt="Third slide"
+          alt="First slide"
         />
-
+        </center>
         <Carousel.Caption>
           <h3>Third slide label</h3>
           <p>

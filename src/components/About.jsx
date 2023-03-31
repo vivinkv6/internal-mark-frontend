@@ -16,7 +16,7 @@ function About() {
       >
         About
       </h1>
-      <div style={{marginLeft:'20px',fontSize:'25px',color:'white',fontFamily:'Jost, sans-serif'}}>
+      <div style={{marginLeft:'20px',fontSize:'25px',color:'#d1d1d1',fontFamily:'Jost, sans-serif'}}>
       <p>
         Welcome to our web app that provides a platform for students to access
         their internal marks. We believe that transparency and accessibility are

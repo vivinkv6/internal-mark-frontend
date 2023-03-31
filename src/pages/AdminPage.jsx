@@ -1,7 +1,7 @@
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Tables from "../components/Tables";
-
+import { Link } from "react-router-dom";
 function AdminPage() {
   return (
     <div className="container">
@@ -16,7 +16,7 @@ function AdminPage() {
         <div className="col-md-4"></div>
         <div className="col-md-5" style={{ display: "inline" }}>
           <select
-            className="btn btn-primary mt-3"
+            className="btn btn-primary mt-3 w-50"
             style={{ position: "relative", right: "0px" }}
           >
             <option selected>Departments</option>
@@ -33,7 +33,7 @@ function AdminPage() {
             <option>Statistics</option>
           </select>
           <select
-            className="btn btn-primary mt-3 ms-3"
+            className="btn btn-primary mt-3 w-50 ms-1"
             style={{ position: "relative", right: "0px" }}
           >
             <option selected>Semester</option>
@@ -46,6 +46,22 @@ function AdminPage() {
           </select>
         </div>
         <Tables />
+        <div>
+          <div style={{ position: "fixed", top: "150px", right: "10px" }}>
+            <Link to="/admin/addresult">
+              <i
+                class="bi bi-plus-circle text-light"
+                style={{ fontSize: "50px" }}
+              ></i>
+            </Link>
+          </div>
+          <div style={{ position: "fixed", top: "150px", right: "80px" }}>
+            <Link to="/admin/updates">
+              {" "}
+              <i class="bi bi-bell text-light" style={{ fontSize: "50px" }}></i>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

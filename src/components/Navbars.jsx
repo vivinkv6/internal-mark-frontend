@@ -4,27 +4,27 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../assets/scam.png";
 import { Link } from "react-router-dom";
-import NavDropdown from "react-bootstrap/NavDropdown";
 
 function Navbars() {
   return (
     <>
-      <Navbar bg="dark" expand="lg">
+      <Navbar bg="dark" expand="md">
         <Container fluid>
           <Navbar>
             <Container>
-              <Navbar.Brand href="#home">
-                <img
-                  src={logo}
-                  width="100"
-                  height="100"
-                  className="d-inline-block align-top text-light"
-                  alt="college logo"
-                />
-              </Navbar.Brand>
+              <Link to="/">
+                <Navbar.Brand>
+                  <img
+                    src={logo}
+                    width="100"
+                    height="100"
+                    className="d-inline-block align-top text-light"
+                    alt="college logo"
+                  />
+                </Navbar.Brand>
+              </Link>
             </Container>
           </Navbar>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -63,6 +63,13 @@ function Navbars() {
                 style={{ fontSize: "20px", fontWeight: "500" }}
               >
                 Contact US
+              </Nav.Link>
+              <Nav.Link
+                href="#location"
+                className="text-light"
+                style={{ fontSize: "20px", fontWeight: "500" }}
+              >
+                Location
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

@@ -1,0 +1,11 @@
+.addresult::-webkit-scrollbar {
+    display: none;
+  }
+
+  .heading{
+    margin-top: 400px;
+    text-align: center;
+    color: aliceblue;
+    font-weight: bold;
+    text-decoration: underline;
+  }
