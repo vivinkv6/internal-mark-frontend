@@ -15,7 +15,7 @@ function Contact() {
           fontWeight: "900",
         }}
       >
-        Contact US
+        Contact
       </h1>
       <Card style={{ width: "18rem", marginLeft: "20px" }} className="p-2 mb-5">
         <Card.Img variant="top" src={logo} />

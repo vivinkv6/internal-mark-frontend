@@ -1,6 +1,22 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {Link} from 'react-router-dom';
 function Notifications() {
+  const [message, setMessage] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchNotification = async () => {
+    const data = (
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/update`)
+    ).data;
+    console.log(data);
+    setMessage(data);
+  };
+
+  useEffect(() => {
+    fetchNotification();
+  }, []);
+
   return (
     <>
       <h1
@@ -17,7 +33,7 @@ function Notifications() {
         Notifications
       </h1>
       <div
-        className="box ms-3"
+        className="box ms-3 rounded"
         style={{
           backgroundColor: "white",
           height: "300px",
@@ -25,12 +41,20 @@ function Notifications() {
           overflow: "scroll",
         }}
       >
-        <div className="notification border border-3 border-secondary mt-3 rounded ms-3 me-3">
-          <p>Notification One</p>
-          <a href="link" style={{ textDecoration: "none" }}>
-            Open
-          </a>
-        </div>
+        <>
+          {message.map((value) => {
+            return (
+              <div key={value._id}>
+                <div className="notification border border-3 border-secondary mt-3 rounded ms-3 me-3">
+                  <p>{value.message}</p>
+                  <Link to='/result' style={{ textDecoration: "none" }}>
+                    Open
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </>
       </div>
     </>
   );

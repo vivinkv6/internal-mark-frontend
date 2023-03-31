@@ -62,7 +62,7 @@ function Navbars() {
                 className="text-light"
                 style={{ fontSize: "20px", fontWeight: "500" }}
               >
-                Contact US
+                Contact
               </Nav.Link>
               <Nav.Link
                 href="#location"

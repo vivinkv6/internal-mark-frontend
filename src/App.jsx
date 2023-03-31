@@ -8,6 +8,7 @@ import AdminForm from "./components/AdminForm";
 import Footers from "./components/Footers";
 import AddResult from "./components/AddResult";
 import Updates from "./components/Updates";
+import SearchResult from "./components/SearchResult";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -17,6 +18,7 @@ function App() {
         <Navbars />
         <Routes>
           <Route exact path="/" element={<UserPage />} />
+          <Route path="/result" element={<SearchResult/>} />
           <Route path="admin" element={<AdminForm />} />
           <Route path="admin/access" element={<AdminPage />} />
           <Route path="admin/addresult" element={<AddResult />} />
