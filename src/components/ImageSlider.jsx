@@ -9,7 +9,7 @@ function ImageSlider() {
         <center>
         <img
           className="Carousel d-block"
-          style={{height:'400px',width:'370px'}}
+          style={{height:'380px',width:'360px'}}
           src={logo}
           alt="First slide"
         />
@@ -23,7 +23,7 @@ function ImageSlider() {
       <center>
         <img
           className="Carousel d-block"
-          style={{height:'400px',width:'400px'}}
+          style={{height:'380px',width:'360px'}}
           src={logo}
           alt="First slide"
         />
@@ -38,7 +38,7 @@ function ImageSlider() {
       <center>
         <img
           className="Carousel d-block"
-          style={{height:'400px',width:'400px'}}
+          style={{height:'380px',width:'360px'}}
           src={logo}
           alt="First slide"
         />
