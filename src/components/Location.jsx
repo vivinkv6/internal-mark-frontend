@@ -2,7 +2,7 @@ import React from "react";
 
 function Location() {
   return (
-    <div className="col-md-12 ms-4">
+    <div className="col-md-12 ms-2">
       <h1
         name="location"
         id="location"

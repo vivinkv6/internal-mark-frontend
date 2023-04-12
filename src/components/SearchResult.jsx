@@ -4,9 +4,9 @@ import Table from "react-bootstrap/Table";
 
 function SearchResult() {
   const [name, setName] = useState("");
-  const [register_no, setRegister_no] = useState("dj");
-  const [department, setDepartment] = useState("Computer Science");
-  const [semester, setSemester] = useState(1);
+  const [register_no, setRegister_no] = useState("");
+  const [department, setDepartment] = useState("");
+  const [semester, setSemester] = useState(0);
   const [result, setResult] = useState([]);
   const [resultShow, setResultShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -84,12 +84,13 @@ function SearchResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Register
+                    Register No &nbsp;&nbsp;&nbsp;&nbsp;
                   </label>
                   <input
                     value={register_no}
+                    onChange={(e)=>setRegister_no(e.target.value)}
                     type="text"
-                    className="rounded ms-3"
+                    className="rounded  w-50"
                   />
                 </div>
                 <div className="col-12">
@@ -98,13 +99,13 @@ function SearchResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Department
+                    Department &nbsp;&nbsp;&nbsp;
                   </label>
                   <select
                     value={department}
-                    className="w-50 mt-3 ms-4 rounded  border border-3"
+                    className="w-50 mt-3 rounded  border border-3"
                     style={{ position: "relative", right: "0px" }}
-                    onchange={(e) => setDepartment(e.target.value)}
+                    onChange={(e) => setDepartment(e.target.value)}
                   >
                     {/* <option selected>Department</option> */}
                     <option value="Computer Science">Computer Science</option>
@@ -127,11 +128,11 @@ function SearchResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Semester
+                    Semester &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </label>
                   <select
                     value={semester}
-                    className="w-50 rounded mt-3 ms-5 border border-3"
+                    className="w-50 rounded mt-3 border border-3"
                     style={{ position: "relative", right: "0px" }}
                     onChange={(e) => setSemester(e.target.value)}
                   >
@@ -220,7 +221,7 @@ function SearchResult() {
           </Table>
         </>
       ) : (
-        <h1>Result Not Found</h1>
+        <h1 className="text-center">Result Not Found</h1>
       )}
     </>
   );

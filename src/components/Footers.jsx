@@ -34,9 +34,12 @@ function Footers() {
           <div style={{color:'white'}}>
          <table cellPadding={5}>
             <tr>
-                <th>Home</th>
-                <th>About</th>
-                <th>Notification</th>
+                
+                
+              <a href="http://govtcollegethrissur.ac.in/" target="_blank"> <th className="bi bi-globe fs-3"></th></a> 
+                <th className="bi bi-youtube fs-3 text-danger"></th>
+                <th className="bi bi-instagram fs-3" style={{color:'#C02E71'}}></th>
+                <th className="bi bi-linkedin fs-3" style={{color:' #0077B5'}}></th>
             </tr>
          </table>
           </div>

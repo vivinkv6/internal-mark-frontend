@@ -11,13 +11,13 @@ function Contact() {
           color: "white",
           fontFamily: "Abril Fatface cursive",
           fontSize: "55px",
-          marginLeft: "20px",
+          marginLeft: "5px",
           fontWeight: "900",
         }}
       >
         Contact
       </h1>
-      <Card style={{ width: "18rem", marginLeft: "20px" }} className="p-2 mb-5">
+      <Card style={{ width: "18rem", marginLeft: "5px" }} className="p-2 mb-5">
         <Card.Img variant="top" src={logo} />
         <hr />
         <Card.Body>
