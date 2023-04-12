@@ -9,7 +9,7 @@ function ImageSlider() {
         <center>
         <img
           className="Carousel d-block"
-          style={{height:'400px',width:'400px'}}
+          style={{height:'400px',width:'370px'}}
           src={logo}
           alt="First slide"
         />

@@ -9,7 +9,9 @@ function UserPage() {
   return (
     <>
       <ImageSlider />
+      <div style={{ marginTop: "200px" }}>
       <About />
+      </div>
       <div style={{ marginTop: "200px" }}>
         <Notifications />
       </div>
