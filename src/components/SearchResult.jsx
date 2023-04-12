@@ -3,19 +3,18 @@ import logo from "../assets/scam.png";
 import Table from "react-bootstrap/Table";
 
 function SearchResult() {
+  const [name, setName] = useState("");
   const [register_no, setRegister_no] = useState("dj");
   const [department, setDepartment] = useState("Computer Science");
   const [semester, setSemester] = useState(1);
-  const [result, setResult] = useState({});
+  const [result, setResult] = useState([]);
   const [resultShow, setResultShow] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  
 
   const fetchResult = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const datas={ register_no, semester, department }
+    const datas = { register_no, semester, department };
     console.log({ register_no, semester, department });
 
     const data = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/result`, {
@@ -25,33 +24,29 @@ function SearchResult() {
         "Content-type": "application/json",
       },
     })
-      .then((res) => res.json()).then(data=>{
-        console.log(data)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
         setResult(data);
         console.log(result.name);
       })
       .catch((err) => console.log(err));
 
-      setLoading(false);
+    setLoading(false);
 
-    if(result.length<1)
-    {
+    if (result.length < 1) {
       console.log("nothing");
       setResultShow(false);
-    }
-    else {
+    } else {
       setDepartment("");
       setSemester("");
       setRegister_no("");
       setResultShow(true);
-    } 
+    }
 
-    // useEffect(()=>{
-    //   result.map((value)=>{
+    const getName = result.find((value) => value.register_no == register_no);
 
-    //   })
-    // })
-    
+    setName(getName);
   };
   return (
     <>
@@ -92,7 +87,7 @@ function SearchResult() {
                     Register
                   </label>
                   <input
-                   value={register_no}
+                    value={register_no}
                     type="text"
                     className="rounded ms-3"
                   />
@@ -109,8 +104,7 @@ function SearchResult() {
                     value={department}
                     className="w-50 mt-3 ms-4 rounded  border border-3"
                     style={{ position: "relative", right: "0px" }}
-                    onchange={(e)=>setDepartment(e.target.value)}
-                  
+                    onchange={(e) => setDepartment(e.target.value)}
                   >
                     {/* <option selected>Department</option> */}
                     <option value="Computer Science">Computer Science</option>
@@ -139,7 +133,7 @@ function SearchResult() {
                     value={semester}
                     className="w-50 rounded mt-3 ms-5 border border-3"
                     style={{ position: "relative", right: "0px" }}
-                    onChange={(e)=>setSemester(e.target.value)}
+                    onChange={(e) => setSemester(e.target.value)}
                   >
                     <option value={1}>1</option>
                     <option value={2}>2</option>
@@ -176,34 +170,29 @@ function SearchResult() {
             variant="light"
             className="mt-3"
             cellPadding={4}
-           
-           
           >
             <thead>
               <tr>
                 <th>Name</th>
-                <th colSpan={6}>{result.name}</th>
-             
+                <th colSpan={6}>{name}</th>
               </tr>
               <tr>
                 <th>Register No.</th>
-                <th colSpan={6}>{result.register_no}</th>
-              
+                <th colSpan={6}>{register_no}</th>
               </tr>
               <tr>
                 <th>Semester</th>
-                <th colSpan={6}>{result.semester}</th>
-              
+                <th colSpan={6}>{semester}</th>
               </tr>
               <tr>
                 <th>Department</th>
-                <th colSpan={6}>{result.department}</th>
+                <th colSpan={6}>{department}</th>
               </tr>
               <tr>
                 <th colSpan={7}></th>
               </tr>
 
-              <tr  style={{textAlign:'center'}}>
+              <tr style={{ textAlign: "center" }}>
                 <th>SUBJECT CODE</th>
                 <th>SUBJECT</th>
                 <th>SEMINAR</th>
@@ -214,24 +203,23 @@ function SearchResult() {
               </tr>
             </thead>
             <tbody>
-              {/* {result.map((value)=>{
-                          return( */}
-              <tr key={result._id}  style={{textAlign:'center'}}>
-                <td className="fw-bold">{result.subjectCode}</td>
-                <td className="fw-bold">{result.subject}</td>
-                <td>{result.seminar}</td>
-                <td>{result.assignment}</td>
-                <td>{result.attendence}</td>
-                <td>{result.internal}</td>
-                <td>{result.total}</td>
-              </tr>
-              {/* )
-                        })} */}
+              {result.map((value) => {
+                return (
+                  <tr key={value._id} style={{ textAlign: "center" }}>
+                    <td className="fw-bold">{value.subjectCode}</td>
+                    <td className="fw-bold">{value.subject}</td>
+                    <td>{value.seminar}</td>
+                    <td>{value.assignment}</td>
+                    <td>{value.attendence}</td>
+                    <td>{value.internal}</td>
+                    <td>{value.total}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
         </>
-      ):
-      (
+      ) : (
         <h1>Result Not Found</h1>
       )}
     </>
