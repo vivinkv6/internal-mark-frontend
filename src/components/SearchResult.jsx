@@ -1,47 +1,68 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/scam.png";
-import axios from "axios";
-import Modal from 'react-bootstrap/Modal';
+import Table from "react-bootstrap/Table";
 
 function SearchResult() {
-  const [register_no, setReg_no] = useState("");
-  const [department, setDepartment] = useState("");
-  const [semester, setSemester] = useState(0);
+  const [register_no, setRegister_no] = useState("dj");
+  const [department, setDepartment] = useState("Computer Science");
+  const [semester, setSemester] = useState(1);
   const [result, setResult] = useState({});
-  const [successAlert, setSuccessAlert] = useState(false);
-  const [failureAlert, setFailureAlert] = useState(false);
+  const [resultShow, setResultShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  
 
   const fetchResult = async (e) => {
     e.preventDefault();
-    const data = { register_no, semester, department };
-    const datas = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/result`, {
+    setLoading(true);
+    const datas={ register_no, semester, department }
+    console.log({ register_no, semester, department });
+
+    const data = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/result`, {
       method: "POST",
-      body: JSON.stringify({ data }),
+      body: JSON.stringify(datas),
       headers: {
-        'Content-type': 'application/json'
-      }
-    });
-    console.log(datas.json());
-    if (datas.ok) {
-      setSuccessAlert(true);
-      setFailureAlert(false);
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => res.json()).then(data=>{
+        console.log(data)
+        setResult(data);
+        console.log(result.name);
+      })
+      .catch((err) => console.log(err));
+
+      setLoading(false);
+
+    if(result.length<1)
+    {
+      console.log("nothing");
+      setResultShow(false);
+    }
+    else {
       setDepartment("");
       setSemester("");
-      setReg_no("");
-    } else {
-      setFailureAlert(true);
-      setSuccessAlert(false);
-    }
+      setRegister_no("");
+      setResultShow(true);
+    } 
+
+    // useEffect(()=>{
+    //   result.map((value)=>{
+
+    //   })
+    // })
+    
   };
   return (
     <>
       <div className="container">
         <div className="row">
           <div
-            className="adminform"
+            className="resultform"
             style={{
               height: "600px",
               padding: "10px",
+
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -51,7 +72,6 @@ function SearchResult() {
             <div>
               <h1 className="text-center text-light fw-bold">Internal Marks</h1>
               <form
-                action=""
                 className="rounded"
                 style={{ backgroundColor: "white", padding: "50px" }}
               >
@@ -72,8 +92,8 @@ function SearchResult() {
                     Register
                   </label>
                   <input
+                   value={register_no}
                     type="text"
-                    onchange={(e) => register_no(e.target.value)}
                     className="rounded ms-3"
                   />
                 </div>
@@ -86,76 +106,25 @@ function SearchResult() {
                     Department
                   </label>
                   <select
+                    value={department}
                     className="w-50 mt-3 ms-4 rounded  border border-3"
                     style={{ position: "relative", right: "0px" }}
+                    onchange={(e)=>setDepartment(e.target.value)}
+                  
                   >
-                    <option selected>Department</option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("Commerce and Management")}
-                    >
-                      Commerce and Management
-                    </option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("Computer Science")}
-                    >
-                      Computer Science
-                    </option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("Economics")}
-                    >
-                      Economics
-                    </option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("English")}
-                    >
-                      English
-                    </option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("Hindi")}
-                    >
-                      Hindi
-                    </option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("Malayalam")}
-                    >
-                      Malayalam
-                    </option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("Mathematics")}
-                    >
-                      Mathemathics
-                    </option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("Political Science")}
-                    >
+                    {/* <option selected>Department</option> */}
+                    <option value="Computer Science">Computer Science</option>
+                    <option value={"Economics"}>Economics</option>
+                    <option value={"English"}>English</option>
+                    <option value={"Hindi"}>Hindi</option>
+                    <option value={"Malayalam"}>Malayalam</option>
+                    <option value={"Mathematics"}>Mathemathics</option>
+                    <option value={"Political Science"}>
                       Political Science
                     </option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("Psychology")}
-                    >
-                      Psychology
-                    </option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("Sanskrit")}
-                    >
-                      Sanskrit
-                    </option>
-                    <option
-                      value={department}
-                      onChange={() => setDepartment("Statistics")}
-                    >
-                      Statistics
-                    </option>
+                    <option value={"Psychology"}>Psychology</option>
+                    <option value={"Sanskrit"}>Sanskrit</option>
+                    <option value={"Statistics"}>Statistics</option>
                   </select>
                 </div>
                 <div className="col-12">
@@ -167,28 +136,17 @@ function SearchResult() {
                     Semester
                   </label>
                   <select
+                    value={semester}
                     className="w-50 rounded mt-3 ms-5 border border-3"
                     style={{ position: "relative", right: "0px" }}
+                    onChange={(e)=>setSemester(e.target.value)}
                   >
-                    <option selected>Semester</option>
-                    <option value={semester} onchange={() => setSemester(1)}>
-                      1
-                    </option>
-                    <option value={semester} onchange={() => setSemester(2)}>
-                      2
-                    </option>
-                    <option value={semester} onchange={() => setSemester(3)}>
-                      3
-                    </option>
-                    <option value={semester} onchange={() => setSemester(4)}>
-                      4
-                    </option>
-                    <option value={semester} onchange={() => setSemester(5)}>
-                      5
-                    </option>
-                    <option value={semester} onchange={() => setSemester(6)}>
-                      6
-                    </option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
                   </select>
                 </div>
                 <center>
@@ -198,23 +156,84 @@ function SearchResult() {
                   >
                     Submit
                   </button>
-
-                  {successAlert && (
-                    <Alert variant="success" className="mt-5">
-                      Notification Send successfully
-                    </Alert>
-                  )}
-                  {failureAlert && (
-                    <Alert variant="danger" className="mt-5">
-                      Something went Wrong!!
-                    </Alert>
-                  )}
                 </center>
               </form>
+
+              {loading && <h1>loading</h1>}
             </div>
           </div>
         </div>
       </div>
+
+      {resultShow ? (
+        <>
+          <Table
+            responsive="md"
+            border={1}
+            striped
+            bordered
+            hover
+            variant="light"
+            className="mt-3"
+            cellPadding={4}
+           
+           
+          >
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th colSpan={6}>{result.name}</th>
+             
+              </tr>
+              <tr>
+                <th>Register No.</th>
+                <th colSpan={6}>{result.register_no}</th>
+              
+              </tr>
+              <tr>
+                <th>Semester</th>
+                <th colSpan={6}>{result.semester}</th>
+              
+              </tr>
+              <tr>
+                <th>Department</th>
+                <th colSpan={6}>{result.department}</th>
+              </tr>
+              <tr>
+                <th colSpan={7}></th>
+              </tr>
+
+              <tr  style={{textAlign:'center'}}>
+                <th>SUBJECT CODE</th>
+                <th>SUBJECT</th>
+                <th>SEMINAR</th>
+                <th>ASSIGNMENT</th>
+                <th>ATTENDENCE</th>
+                <th>INTERNAL</th>
+                <th>TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* {result.map((value)=>{
+                          return( */}
+              <tr key={result._id}  style={{textAlign:'center'}}>
+                <td className="fw-bold">{result.subjectCode}</td>
+                <td className="fw-bold">{result.subject}</td>
+                <td>{result.seminar}</td>
+                <td>{result.assignment}</td>
+                <td>{result.attendence}</td>
+                <td>{result.internal}</td>
+                <td>{result.total}</td>
+              </tr>
+              {/* )
+                        })} */}
+            </tbody>
+          </Table>
+        </>
+      ):
+      (
+        <h1>Result Not Found</h1>
+      )}
     </>
   );
 }

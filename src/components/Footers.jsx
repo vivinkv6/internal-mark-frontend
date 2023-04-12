@@ -15,7 +15,7 @@ function Footers() {
       <Navbar
         bg="dark"
         expand="lg"
-        style={{ position: "static", bottom: "0%" }}
+        style={{ position: "static", bottom: "0%",marginTop:'300px' }}
       >
         <Container fluid>
           <Navbar>

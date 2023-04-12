@@ -9,6 +9,7 @@ import Footers from "./components/Footers";
 import AddResult from "./components/AddResult";
 import Updates from "./components/Updates";
 import SearchResult from "./components/SearchResult";
+
 function App() {
   const [count, setCount] = useState(0);
 

@@ -1,7 +1,49 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import logo from "../assets/scam.png";
+import { useNavigate } from "react-router-dom";
+import Alert from "react-bootstrap/Alert";
 
 function AdminForm() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate;
+
+
+
+  const adminSubmition = async (e) => {
+    e.preventDefault();
+
+    if (username == "" || password == "") {
+      setMessage("Please fill all the details");
+    } else {
+      const checkAdmin = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/admin`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => setIsAdmin(data.status));
+        
+    }
+
+    useMemo(()=>{
+      if(!isAdmin){
+        setMessage('Invalid username and password')
+      }
+    })
+  }
+
+
+
+ 
+
   return (
     <>
       <div className="container">
@@ -19,7 +61,7 @@ function AdminForm() {
           >
             <div>
               <form
-                action=""
+                action="/admin/access"
                 className="rounded"
                 style={{ backgroundColor: "white", padding: "50px" }}
               >
@@ -41,7 +83,12 @@ function AdminForm() {
                   </label>
                 </div>
                 <div className="col-12">
-                  <input type="text" className="rounded" />
+                  <input
+                    value={username}
+                    type="text"
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="rounded"
+                  />
                 </div>
                 <div className="col-12 mt-3">
                   <label
@@ -53,11 +100,26 @@ function AdminForm() {
                   </label>
                 </div>
                 <div className="col-12">
-                  <input type="password" className="rounded" />
+                  <input
+                    value={password}
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="rounded"
+                  />
                 </div>
                 <center>
-                  <button className="btn btn-primary mt-3">Submit</button>
+                  <button
+                    className="btn btn-primary mt-3"
+                    onClick={adminSubmition}
+                  >
+                    Submit
+                  </button>
                 </center>
+                {message.length > 0 && (
+                  <Alert variant="danger" className="mt-3">
+                    {message}
+                  </Alert>
+                )}
               </form>
             </div>
           </div>

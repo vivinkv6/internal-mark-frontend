@@ -1,27 +1,92 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/scam.png";
 import "./styles/style.css";
+import { Alert } from "react-bootstrap";
+
 function AddResult() {
+  const [name, setName] = useState("");
+  const [register_no, setRegister_no] = useState("");
+  const [department, setDepartment] = useState("");
+  const [semester, setSemester] = useState("");
+  const [subject, setSubject] = useState("");
+  const [subjectCode, setSubjectCode] = useState("");
+  const [assignment, setAssignment] = useState("");
+  const [seminar, setSeminar] = useState("");
+  const [attendence, setAttendence] = useState("");
+  const [internal, setInternal] = useState("");
+  const [total, setTotal] = useState("");
+  const [failureAlert, setFailureAlert] = useState(false);
+  const [message, setMessage] = useState("");
+
+  
+  const resultSubmition = async (e) => {
+    e.preventDefault();
+    const data = {
+      name,
+      register_no,
+      department,
+      semester,
+      subject,
+      subjectCode,
+      assignment,
+      seminar,
+      internal,
+      attendence,
+      total,
+    };
+
+    if (
+      name == "" ||
+      register_no == "" ||
+      department == "" ||
+      semester == "" ||
+      subject == "" ||
+      subjectCode == "" ||
+      assignment == "" ||
+      seminar == "" ||
+      internal == "" ||
+      attendence == "" ||
+      total == ""
+    ) {
+      setFailureAlert(true);
+    } else {
+      setFailureAlert(false);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/add`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => setMessage(data))
+        .catch((err) => console.log(err));
+    }
+  };
   return (
     <>
       <div className="container">
         <div className="row">
           <div
             className="addresult"
-            style={{
-              height: "600px",
-              padding: "10px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              overflow: "scroll",
-            }}
+            // style={{
+            //   height: "600px",
+            //   padding: "10px",
+            //   display: "flex",
+            //   flexDirection: "column",
+            //   justifyContent: "center",
+            //   alignItems: "center",
+            //   overflow: "scroll",
+            // }}
           >
             <div>
               <h1 className="heading">Add Student Result</h1>
               <form
-                action=""
+                onSubmit={resultSubmition}
                 className="rounded"
                 style={{ backgroundColor: "white", padding: "50px" }}
               >
@@ -39,9 +104,15 @@ function AddResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    UserName
+                    UserName &nbsp;&nbsp;&nbsp;&nbsp;
                   </label>
-                  <input type="text" className="rounded ms-4" />
+                  <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    style={{ height: "30px" }}
+                    className="rounded w-50"
+                  />
                 </div>
 
                 <div className="col-12 mt-3">
@@ -50,9 +121,15 @@ function AddResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Register No.
+                    Register No. &nbsp;&nbsp;
                   </label>
-                  <input type="password" className="rounded ms-2" />
+                  <input
+                    value={register_no}
+                    onChange={(e) => setRegister_no(e.target.value)}
+                    style={{ height: "30px" }}
+                    type="text"
+                    className="rounded w-50"
+                  />
                 </div>
                 <div className="col-12 mt-3">
                   <label
@@ -60,24 +137,33 @@ function AddResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Department
+                    Department &nbsp;&nbsp;
                   </label>
                   <select
-                    className="w-50 rounded ms-2 border border-3"
-                    style={{ position: "relative", right: "0px" }}
+                    className="w-50 rounded  border border-3 w-50"
+                    style={{
+                      position: "relative",
+                      right: "0px",
+                      height: "30px",
+                    }}
+                    value={department}
+                    onChange={(e) => setDepartment(e.target.value)}
                   >
-                    <option selected>Department</option>
-                    <option>Commerce and Management</option>
-                    <option>Computer Science</option>
-                    <option>Economics</option>
-                    <option>English</option>
-                    <option>Hindi</option>
-                    <option>Malayalam</option>
-                    <option>Mathemathics</option>
-                    <option>Political Science</option>
-                    <option>Psychology</option>
-                    <option>Sanskrit</option>
-                    <option>Statistics</option>
+                    <option value={"Commerce and Management"}>
+                      Commerce and Management
+                    </option>
+                    <option value={"Computer Science"}>Computer Science</option>
+                    <option value={"Economics"}>Economics</option>
+                    <option value={"English"}>English</option>
+                    <option value={"Hindi"}>Hindi</option>
+                    <option value={"Malayalam"}>Malayalam</option>
+                    <option value={"Mathemathics"}>Mathemathics</option>
+                    <option value={"Political Science"}>
+                      Political Science
+                    </option>
+                    <option value={"Psychology"}>Psychology</option>
+                    <option value={"Sanskrit"}>Sanskrit</option>
+                    <option value={"Statistics"}>Statistics</option>
                   </select>
                 </div>
                 <div className="col-12 mt-3">
@@ -86,19 +172,24 @@ function AddResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Semester
+                    Semester &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </label>
                   <select
-                    className="w-50 rounded ms-4 border border-3"
-                    style={{ position: "relative", right: "0px" }}
+                    value={semester}
+                    onChange={(e) => setSemester(e.target.value)}
+                    className="w-50 rounded  border border-3"
+                    style={{
+                      position: "relative",
+                      right: "0px",
+                      height: "30px",
+                    }}
                   >
-                    <option selected>Semester</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
                   </select>
                 </div>
                 <div className="col-12 mt-3">
@@ -108,8 +199,15 @@ function AddResult() {
                     style={{ fontSize: "20px" }}
                   >
                     Subject
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </label>
-                  <input type="text" className="rounded ms-5" />
+                  <input
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    type="text"
+                    style={{ height: "30px" }}
+                    className="rounded w-50"
+                  />
                 </div>
                 <div className="col-12 mt-3">
                   <label
@@ -117,9 +215,15 @@ function AddResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Subject Code
+                    Subject Code &nbsp;
                   </label>
-                  <input type="text" className="rounded ms-3" />
+                  <input
+                    value={subjectCode}
+                    onChange={(e) => setSubjectCode(e.target.value)}
+                    type="text"
+                    style={{ height: "30px" }}
+                    className="rounded w-50"
+                  />
                 </div>
                 <div className="col-12 mt-3">
                   <label className="fw-bold" style={{ fontSize: "30px" }}>
@@ -132,9 +236,14 @@ function AddResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Assignment
+                    Assignment &nbsp;&nbsp;&nbsp;
                   </label>
-                  <input type="number" className="rounded ms-3 w-25" />
+                  <input
+                    value={assignment}
+                    onChange={(e) => setAssignment(e.target.value)}
+                    type="number"
+                    className="rounded w-25"
+                  />
                 </div>
                 <div className="col-12 mt-3">
                   <label
@@ -142,9 +251,14 @@ function AddResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Seminar
+                    Seminar &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
                   </label>
-                  <input type="number" className="rounded ms-5 w-25" />
+                  <input
+                    value={seminar}
+                    onChange={(e) => setSeminar(e.target.value)}
+                    type="number"
+                    className="rounded w-25"
+                  />
                 </div>
                 <div className="col-12 mt-3">
                   <label
@@ -152,9 +266,14 @@ function AddResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Attendence
+                    Attendence &nbsp;&nbsp;&nbsp;
                   </label>
-                  <input type="number" className="rounded ms-3 w-25" />
+                  <input
+                    value={attendence}
+                    onChange={(e) => setAttendence(e.target.value)}
+                    type="number"
+                    className="rounded  w-25"
+                  />
                 </div>
                 <div className="col-12 mt-3">
                   <label
@@ -162,9 +281,14 @@ function AddResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Internal
+                    Internal &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
                   </label>
-                  <input type="number" className="rounded ms-5 w-25" />
+                  <input
+                    value={internal}
+                    onChange={(e) => setInternal(e.target.value)}
+                    type="number"
+                    className="rounded  w-25"
+                  />
                 </div>
                 <div className="col-12 mt-3">
                   <label
@@ -172,12 +296,28 @@ function AddResult() {
                     className="fw-bold"
                     style={{ fontSize: "20px" }}
                   >
-                    Total Score
+                    Total Score &nbsp;&nbsp;&nbsp;
                   </label>
-                  <input type="text" className="rounded ms-3 w-25" />
+                  <input
+                    value={total}
+                    onChange={(e) => setTotal(e.target.value)}
+                    type="text"
+                    className="rounded  w-25"
+                  />
                 </div>
                 <center>
                   <button className="btn btn-primary mt-3">Submit</button>
+                  <br />
+                  {message.length > 0 && (
+                    <Alert variant="success" className="mt-4 w-50">
+                      {message}
+                    </Alert>
+                  )}
+                  {failureAlert && (
+                    <Alert variant="danger" className="mt-4 w-50">
+                      Please fill all the details
+                    </Alert>
+                  )}
                 </center>
               </form>
             </div>
