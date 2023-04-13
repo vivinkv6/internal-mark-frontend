@@ -14,8 +14,10 @@ function SearchResult() {
   const [loading, setLoading] = useState(false);
   const [hide, setHide] = useState(false);
   const [nullAlert, setNullAlert] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
   const fetchResult = async (e) => {
+    setNotFound(false);
     setHide(false);
     setResultShow(false);
     e.preventDefault();
@@ -44,20 +46,22 @@ function SearchResult() {
             setName(data[0].name);
             setHide(true);
             setResultShow(true);
+          } else {
+            setNotFound(true);
           }
           setLoading(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => setNullAlert(err));
 
-      if (result.length < 2) {
-        setResultShow(false);
-        setHide(false);
-      }
-      if (!result.length < 2) {
-        setLoading(false);
-        setHide(true);
-        setResultShow(true);
-      }
+      // if (result.length < 2) {
+      //   setResultShow(false);
+      //   setHide(false);
+      // }
+      // if (!result.length < 2) {
+      //   setLoading(false);
+      //   setHide(true);
+      //   setResultShow(true);
+      // }
     }
   };
   return (
@@ -186,7 +190,13 @@ function SearchResult() {
                     )}
                   </form>
 
-                  {loading && <h1>loading</h1>}
+                  {loading && <h3>loading...</h3>}
+
+                  {notFound ? (
+                    <h3 className="text-center mt-3">Result Not Found</h3>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>
@@ -281,7 +291,7 @@ function SearchResult() {
           )}
         </>
       ) : (
-        <h1 className="text-center">Result Not Found</h1>
+        <></>
       )}
     </>
   );
