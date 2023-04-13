@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../assets/scam.png";
 import Table from "react-bootstrap/Table";
 import "./styles/style.css";
+import { Alert } from "react-bootstrap";
 
 function SearchResult() {
   const [name, setName] = useState("");
@@ -12,37 +13,52 @@ function SearchResult() {
   const [resultShow, setResultShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [hide, setHide] = useState(false);
+  const [nullAlert, setNullAlert] = useState(false);
 
   const fetchResult = async (e) => {
     setHide(false);
     setResultShow(false);
     e.preventDefault();
 
-    setLoading(true);
-    const datas = { register_no, semester, department };
-    console.log({ register_no, semester, department });
+    if (register_no == "" || department == "" || semester == 0) {
+      setNullAlert(true);
+    } else {
+      setNullAlert(false);
+      setLoading(true);
+      const datas = { register_no, semester, department };
 
-    const data = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/result`, {
-      method: "POST",
-      body: JSON.stringify(datas),
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setResult(data);
-        console.log(data[0].name);
-        setName(data[0].name)
-      })
-      .catch((err) => console.log(err));
+      const data = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/result`,
+        {
+          method: "POST",
+          body: JSON.stringify(datas),
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.length > 1) {
+            setResult(data);
+            setName(data[0].name);
+            setHide(true);
+            setResultShow(true);
+          }
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
 
-  
-    setLoading(false);
-    setHide(true);
-    setResultShow(true);
-    console.log(name);
+      if (result.length < 2) {
+        setResultShow(false);
+        setHide(false);
+      }
+      if (!result.length < 2) {
+        setLoading(false);
+        setHide(true);
+        setResultShow(true);
+      }
+    }
   };
   return (
     <>
@@ -161,6 +177,13 @@ function SearchResult() {
                         Submit
                       </button>
                     </center>
+                    {nullAlert ? (
+                      <Alert variant="danger" className="mt-3">
+                        Please fill all the details
+                      </Alert>
+                    ) : (
+                      <></>
+                    )}
                   </form>
 
                   {loading && <h1>loading</h1>}
@@ -173,86 +196,89 @@ function SearchResult() {
 
       {resultShow ? (
         <>
-          <Table
-            responsive="md"
-            striped
-            bordered
-            hover
-            variant="light"
-            className="mt-5 table"
-            cellPadding={4}
-          >
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th colSpan={6}>{name}</th>
-              </tr>
-              <tr>
-                <th>RegisterNo.</th>
-                <th colSpan={6}>{register_no}</th>
-              </tr>
-              <tr>
-                <th>Semester</th>
-                <th colSpan={6}>{semester}</th>
-              </tr>
-              <tr>
-                <th>Department</th>
-                <th colSpan={6}>{department}</th>
-              </tr>
-              <tr>
-                <th colSpan={7}></th>
-              </tr>
-
-              <tr style={{ textAlign: "center" }}>
-                <th>SUB CODE</th>
-                <th>SUBJECT</th>
-                <th>SEMINAR</th>
-                <th>ASSIGNMENT</th>
-                <th>ATTENDENCE</th>
-                <th>INTERNAL</th>
-                <th>TOTAL</th>
-              </tr>
-            </thead>
-            <tbody>
-              {result.map((value) => {
-                return (
-                  <tr key={value._id} style={{ textAlign: "center" }}>
-                    <td className="fw-bold">{value.subjectCode}</td>
-                    <td className="fw-bold">{value.subject}</td>
-                    <td>{value.seminar}</td>
-                    <td>{value.assignment}</td>
-                    <td>{value.attendence}</td>
-                    <td>{value.internal}</td>
-                    <td>{value.total}</td>
+          {result.length > 1 && (
+            <>
+              <Table
+                responsive="md"
+                striped
+                bordered
+                hover
+                variant="light"
+                className="mt-5 table"
+                cellPadding={4}
+              >
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th colSpan={6}>{name}</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </Table>
+                  <tr>
+                    <th>RegisterNo.</th>
+                    <th colSpan={6}>{register_no}</th>
+                  </tr>
+                  <tr>
+                    <th>Semester</th>
+                    <th colSpan={6}>{semester}</th>
+                  </tr>
+                  <tr>
+                    <th>Department</th>
+                    <th colSpan={6}>{department}</th>
+                  </tr>
+                  <tr>
+                    <th colSpan={7}></th>
+                  </tr>
 
-          {/* <div className="mt-3">
+                  <tr style={{ textAlign: "center" }}>
+                    <th>SUB CODE</th>
+                    <th>SUBJECT</th>
+                    <th>SEMINAR</th>
+                    <th>ASSIGNMENT</th>
+                    <th>ATTENDENCE</th>
+                    <th>INTERNAL</th>
+                    <th>TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <>
+                    {result.map((value) => {
+                      return (
+                        <tr key={value._id} style={{ textAlign: "center" }}>
+                          <td className="fw-bold">{value.subjectCode}</td>
+                          <td className="fw-bold">{value.subject}</td>
+                          <td>{value.seminar}</td>
+                          <td>{value.assignment}</td>
+                          <td>{value.attendence}</td>
+                          <td>{value.internal}</td>
+                          <td>{value.total}</td>
+                        </tr>
+                      );
+                    })}
+                  </>
+                </tbody>
+              </Table>
+
+              {/* <div className="mt-3">
             <h4>Discliamer</h4>
             <p></p>
           </div> */}
-          
-          <center>
 
-          <button className="btn btn-primary m-3" onClick={print}>
-              Print
-            </button>
+              <center>
+                <button className="btn btn-primary m-3" onClick={print}>
+                  Print
+                </button>
 
-            <button
-              className="btn btn-danger"
-              onClick={() => {
-                setHide(false);
-                setResultShow(false);
-              }}
-            >
-              Close
-            </button>
-           
-          </center>
-         
+                <button
+                  className="btn btn-danger m-3"
+                  onClick={() => {
+                    setHide(false);
+                    setResultShow(false);
+                  }}
+                >
+                  Close
+                </button>
+              </center>
+            </>
+          )}
         </>
       ) : (
         <h1 className="text-center">Result Not Found</h1>
