@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/scam.png";
 import Table from "react-bootstrap/Table";
+import "./styles/style.css";
 
 function SearchResult() {
   const [name, setName] = useState("");
@@ -10,9 +11,13 @@ function SearchResult() {
   const [result, setResult] = useState([]);
   const [resultShow, setResultShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [hide, setHide] = useState(false);
 
   const fetchResult = async (e) => {
+    setHide(false);
+    setResultShow(false);
     e.preventDefault();
+
     setLoading(true);
     const datas = { register_no, semester, department };
     console.log({ register_no, semester, department });
@@ -28,148 +33,153 @@ function SearchResult() {
       .then((data) => {
         console.log(data);
         setResult(data);
-        console.log(result.name);
+        console.log(data[0].name);
+        setName(data[0].name)
       })
       .catch((err) => console.log(err));
 
+  
     setLoading(false);
-
-    if (result.length < 1) {
-      console.log("nothing");
-      setResultShow(false);
-    } else {
-      setDepartment("");
-      setSemester("");
-      setRegister_no("");
-      setResultShow(true);
-    }
-
-    const getName = result.find((value) => value.register_no == register_no);
-
-    setName(getName);
+    setHide(true);
+    setResultShow(true);
+    console.log(name);
   };
   return (
     <>
-      <div className="container">
-        <div className="row">
-          <div
-            className="resultform"
-            style={{
-              height: "600px",
-              padding: "10px",
+      {hide ? (
+        <></>
+      ) : (
+        <>
+          <div className="container">
+            <div className="row">
+              <div
+                className="resultform"
+                style={{
+                  height: "600px",
+                  padding: "10px",
 
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div>
-              <h1 className="text-center text-light fw-bold">Internal Marks</h1>
-              <form
-                className="rounded"
-                style={{ backgroundColor: "white", padding: "50px" }}
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                <center>
-                  <img
-                    src={logo}
-                    height="100"
-                    className="mb-3"
-                    alt="college logo"
-                  />
-                </center>
-                <div className="col-12">
-                  <label
-                    htmlFor="register_no"
-                    className="fw-bold"
-                    style={{ fontSize: "20px" }}
+                <div>
+                  <h1 className="text-center text-light fw-bold">
+                    Internal Marks
+                  </h1>
+                  <form
+                    className="rounded"
+                    style={{ backgroundColor: "white", padding: "50px" }}
                   >
-                    Register No &nbsp;&nbsp;&nbsp;&nbsp;
-                  </label>
-                  <input
-                    value={register_no}
-                    onChange={(e)=>setRegister_no(e.target.value)}
-                    type="text"
-                    className="rounded  w-50"
-                  />
-                </div>
-                <div className="col-12">
-                  <label
-                    htmlFor="department"
-                    className="fw-bold"
-                    style={{ fontSize: "20px" }}
-                  >
-                    Department &nbsp;&nbsp;&nbsp;
-                  </label>
-                  <select
-                    value={department}
-                    className="w-50 mt-3 rounded  border border-3"
-                    style={{ position: "relative", right: "0px" }}
-                    onChange={(e) => setDepartment(e.target.value)}
-                  >
-                    {/* <option selected>Department</option> */}
-                    <option value="Computer Science">Computer Science</option>
-                    <option value={"Economics"}>Economics</option>
-                    <option value={"English"}>English</option>
-                    <option value={"Hindi"}>Hindi</option>
-                    <option value={"Malayalam"}>Malayalam</option>
-                    <option value={"Mathematics"}>Mathemathics</option>
-                    <option value={"Political Science"}>
-                      Political Science
-                    </option>
-                    <option value={"Psychology"}>Psychology</option>
-                    <option value={"Sanskrit"}>Sanskrit</option>
-                    <option value={"Statistics"}>Statistics</option>
-                  </select>
-                </div>
-                <div className="col-12">
-                  <label
-                    htmlFor="password"
-                    className="fw-bold"
-                    style={{ fontSize: "20px" }}
-                  >
-                    Semester &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </label>
-                  <select
-                    value={semester}
-                    className="w-50 rounded mt-3 border border-3"
-                    style={{ position: "relative", right: "0px" }}
-                    onChange={(e) => setSemester(e.target.value)}
-                  >
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                    <option value={6}>6</option>
-                  </select>
-                </div>
-                <center>
-                  <button
-                    className="btn btn-primary mt-3"
-                    onClick={fetchResult}
-                  >
-                    Submit
-                  </button>
-                </center>
-              </form>
+                    <center>
+                      <img
+                        src={logo}
+                        height="100"
+                        className="mb-3"
+                        alt="college logo"
+                      />
+                    </center>
+                    <div className="col-12">
+                      <label
+                        htmlFor="register_no"
+                        className="fw-bold"
+                        style={{ fontSize: "20px" }}
+                      >
+                        Register No &nbsp;&nbsp;&nbsp;&nbsp;
+                      </label>
+                      <input
+                        value={register_no}
+                        onChange={(e) => setRegister_no(e.target.value)}
+                        type="text"
+                        className="rounded  w-50 "
+                      />
+                    </div>
+                    <br />
+                    <div className="col-12">
+                      <label
+                        htmlFor="department"
+                        className="fw-bold"
+                        style={{ fontSize: "20px" }}
+                      >
+                        Department &nbsp;&nbsp;&nbsp;
+                      </label>
 
-              {loading && <h1>loading</h1>}
+                      <select
+                        value={department}
+                        className="w-50 rounded  border border-3"
+                        style={{ position: "relative", right: "0px" }}
+                        onChange={(e) => setDepartment(e.target.value)}
+                      >
+                        <option>Department</option>
+                        <option value="Computer Science">
+                          Computer Science
+                        </option>
+                        <option value={"Economics"}>Economics</option>
+                        <option value={"English"}>English</option>
+                        <option value={"Hindi"}>Hindi</option>
+                        <option value={"Malayalam"}>Malayalam</option>
+                        <option value={"Mathematics"}>Mathemathics</option>
+                        <option value={"Political Science"}>
+                          Political Science
+                        </option>
+                        <option value={"Psychology"}>Psychology</option>
+                        <option value={"Sanskrit"}>Sanskrit</option>
+                        <option value={"Statistics"}>Statistics</option>
+                      </select>
+                    </div>
+                    <br />
+                    <div className="col-12">
+                      <label
+                        htmlFor="password"
+                        className="fw-bold"
+                        style={{ fontSize: "20px" }}
+                      >
+                        Semester
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </label>
+                      <select
+                        value={semester}
+                        className="w-50 rounded border border-3"
+                        style={{ position: "relative", right: "0px" }}
+                        onChange={(e) => setSemester(Number(e.target.value))}
+                      >
+                        <option>Semester</option>
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                        <option value={3}>3</option>
+                        <option value={4}>4</option>
+                        <option value={5}>5</option>
+                        <option value={6}>6</option>
+                      </select>
+                    </div>
+                    <center>
+                      <button
+                        className="btn btn-primary mt-3"
+                        onClick={fetchResult}
+                      >
+                        Submit
+                      </button>
+                    </center>
+                  </form>
+
+                  {loading && <h1>loading</h1>}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
 
       {resultShow ? (
         <>
           <Table
             responsive="md"
-            border={1}
             striped
             bordered
             hover
             variant="light"
-            className="mt-3"
+            className="mt-5 table"
             cellPadding={4}
           >
             <thead>
@@ -178,7 +188,7 @@ function SearchResult() {
                 <th colSpan={6}>{name}</th>
               </tr>
               <tr>
-                <th>Register No.</th>
+                <th>RegisterNo.</th>
                 <th colSpan={6}>{register_no}</th>
               </tr>
               <tr>
@@ -194,7 +204,7 @@ function SearchResult() {
               </tr>
 
               <tr style={{ textAlign: "center" }}>
-                <th>SUBJECT CODE</th>
+                <th>SUB CODE</th>
                 <th>SUBJECT</th>
                 <th>SEMINAR</th>
                 <th>ASSIGNMENT</th>
@@ -219,6 +229,30 @@ function SearchResult() {
               })}
             </tbody>
           </Table>
+
+          {/* <div className="mt-3">
+            <h4>Discliamer</h4>
+            <p></p>
+          </div> */}
+          
+          <center>
+
+          <button className="btn btn-primary m-3" onClick={print}>
+              Print
+            </button>
+
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                setHide(false);
+                setResultShow(false);
+              }}
+            >
+              Close
+            </button>
+           
+          </center>
+         
         </>
       ) : (
         <h1 className="text-center">Result Not Found</h1>
