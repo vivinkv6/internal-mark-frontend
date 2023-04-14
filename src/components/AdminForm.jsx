@@ -8,15 +8,17 @@ function AdminForm() {
   const [password, setPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [message, setMessage] = useState("");
-  const navigate = useNavigate;
-
-
+  const navigate = useNavigate();
+  //sampledev@2002
 
   const adminSubmition = async (e) => {
+    console.log("start");
+
     e.preventDefault();
 
     if (username == "" || password == "") {
       setMessage("Please fill all the details");
+      console.log(message);
     } else {
       const checkAdmin = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}api/admin`,
@@ -29,20 +31,20 @@ function AdminForm() {
         }
       )
         .then((res) => res.json())
-        .then((data) => setIsAdmin(data.status));
-        
+        .then((data) => {
+          setIsAdmin(data.status);
+          console.log(isAdmin);
+          if (isAdmin) {
+            navigate("selection");
+            console.log("yes");
+          } else {
+            setMessage("Invalid Username and Password");
+          }
+          console.log("mid");
+        });
     }
-
-    useMemo(()=>{
-      if(!isAdmin){
-        setMessage('Invalid username and password')
-      }
-    })
-  }
-
-
-
- 
+    console.log("end");
+  };
 
   return (
     <>
@@ -61,7 +63,6 @@ function AdminForm() {
           >
             <div>
               <form
-                action="/admin/access"
                 className="rounded"
                 style={{ backgroundColor: "white", padding: "50px" }}
               >
