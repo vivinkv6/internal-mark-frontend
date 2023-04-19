@@ -25,10 +25,11 @@ function Notifications() {
         id="notification"
         style={{
           color: "white",
-          fontFamily: "Abril Fatface cursive",
+          fontFamily: "Abril Fatface, cursive",
           fontSize: "55px",
           marginLeft: "5px",
           fontWeight: "900",
+          letterSpacing:"1px"
         }}
       >
         Notifications
