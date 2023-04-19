@@ -29,10 +29,10 @@ function Notifications() {
           fontSize: "55px",
           marginLeft: "5px",
           fontWeight: "900",
-          letterSpacing:"1px"
+          letterSpacing:"2.5px"
         }}
       >
-        Notifications
+        Notification
       </h1>
       <div
         className="box ms-1 rounded"
