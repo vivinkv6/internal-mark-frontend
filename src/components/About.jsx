@@ -12,6 +12,7 @@ function About() {
           fontSize: "55px",
           marginLeft: "5px",
           fontWeight: "900",
+          letterSpacing:"1px"
         }}
       >
         About
