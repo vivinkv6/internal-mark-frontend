@@ -9,7 +9,7 @@ function Contact() {
         id="contact"
         style={{
           color: "white",
-          fontFamily: "Abril Fatface cursive",
+          fontFamily: "Abril Fatface, cursive",
           fontSize: "55px",
           marginLeft: "5px",
           fontWeight: "900",
