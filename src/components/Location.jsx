@@ -11,6 +11,7 @@ function Location() {
           fontFamily: "Abril Fatface, cursive",
           fontSize: "55px",
           fontWeight: "900",
+          letterSpacing:"1px"
         }}
       >
         Location
