@@ -60,7 +60,7 @@ function Updates() {
               <form
                 action=""
                 className="rounded"
-                style={{ backgroundColor: "white", padding: "50px" }}
+                style={{ backgroundColor: "white", padding: "30px" }}
               >
                 <center>
                   <img
