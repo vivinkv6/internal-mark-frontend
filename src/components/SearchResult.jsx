@@ -3,6 +3,7 @@ import logo from "../assets/scam.png";
 import Table from "react-bootstrap/Table";
 import "./styles/style.css";
 import { Alert } from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
 
 function SearchResult() {
   const [name, setName] = useState("");
@@ -66,18 +67,102 @@ function SearchResult() {
   };
   return (
     <>
-      {hide ? (
-        <></>
-      ) : (
-        <>
-          <div className="container">
-            <div className="row">
+      <div className="container">
+        <div className="row">
+          {hide ? (
+            <>
+              {result.length > 1 && (
+                <>
+                  <Table
+                    responsive="md"
+                    border={1}
+                    striped
+                    bordered
+                    hover
+                    variant="light"
+                    className="mt-5 table"
+                    cellPadding={4}
+                  >
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th colSpan={6}>{name}</th>
+                      </tr>
+                      <tr>
+                        <th>RegisterNo.</th>
+                        <th colSpan={6}>{register_no}</th>
+                      </tr>
+                      <tr>
+                        <th>Semester</th>
+                        <th colSpan={6}>{semester}</th>
+                      </tr>
+                      <tr>
+                        <th>Department</th>
+                        <th colSpan={6}>{department}</th>
+                      </tr>
+                      <tr>
+                        <th colSpan={7}></th>
+                      </tr>
+
+                      <tr style={{ textAlign: "center" }}>
+                        <th>SUB CODE</th>
+                        <th>SUBJECT</th>
+                        <th>SEMINAR</th>
+                        <th>ASSIGNMENT</th>
+                        <th>ATTENDENCE</th>
+                        <th>INTERNAL</th>
+                        <th>TOTAL</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <>
+                        {result.map((value) => {
+                          return (
+                            <tr key={value._id} style={{ textAlign: "center" }}>
+                              <td className="fw-bold">{value.subjectCode}</td>
+                              <td className="fw-bold">{value.subject}</td>
+                              <td>{value.seminar}</td>
+                              <td>{value.assignment}</td>
+                              <td>{value.attendence}</td>
+                              <td>{value.internal}</td>
+                              <td>{value.total}</td>
+                            </tr>
+                          );
+                        })}
+                      </>
+                    </tbody>
+                  </Table>
+
+                  {/* <div className="mt-3">
+            <h4>Discliamer</h4>
+            <p></p>
+          </div> */}
+
+                  <center>
+                    <button className="btn btn-primary m-3" onClick={print}>
+                      Print
+                    </button>
+
+                    <button
+                      className="btn btn-danger m-3"
+                      onClick={() => {
+                        setHide(false);
+                        setResultShow(false);
+                      }}
+                    >
+                      Close
+                    </button>
+                  </center>
+                </>
+              )}
+            </>
+          ) : (
+            <>
               <div
                 className="resultform"
                 style={{
                   height: "600px",
                   padding: "10px",
-
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
@@ -190,109 +275,28 @@ function SearchResult() {
                     )}
                   </form>
 
-                  {loading && <h3>loading...</h3>}
+                  {loading && (
+                    <h3 className="mt-3 text-light text-center">
+                      Loading{" "}
+                      <Spinner animation="grow" size="sm" className="me-1" />
+                      <Spinner animation="grow" size="sm" className="me-1" />
+                      <Spinner animation="grow" size="sm" className="me-1" />
+                    </h3>
+                  )}
 
                   {notFound ? (
-                    <h3 className="text-center mt-3">Result Not Found</h3>
+                    <h3 className="text-center mt-3 text-light">
+                      Result Not Found
+                    </h3>
                   ) : (
                     <></>
                   )}
                 </div>
               </div>
-            </div>
-          </div>
-        </>
-      )}
-
-      {resultShow ? (
-        <>
-          {result.length > 1 && (
-            <>
-              <Table
-                responsive="md"
-                striped
-                bordered
-                hover
-                variant="light"
-                className="mt-5 table"
-                cellPadding={4}
-              >
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th colSpan={6}>{name}</th>
-                  </tr>
-                  <tr>
-                    <th>RegisterNo.</th>
-                    <th colSpan={6}>{register_no}</th>
-                  </tr>
-                  <tr>
-                    <th>Semester</th>
-                    <th colSpan={6}>{semester}</th>
-                  </tr>
-                  <tr>
-                    <th>Department</th>
-                    <th colSpan={6}>{department}</th>
-                  </tr>
-                  <tr>
-                    <th colSpan={7}></th>
-                  </tr>
-
-                  <tr style={{ textAlign: "center" }}>
-                    <th>SUB CODE</th>
-                    <th>SUBJECT</th>
-                    <th>SEMINAR</th>
-                    <th>ASSIGNMENT</th>
-                    <th>ATTENDENCE</th>
-                    <th>INTERNAL</th>
-                    <th>TOTAL</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <>
-                    {result.map((value) => {
-                      return (
-                        <tr key={value._id} style={{ textAlign: "center" }}>
-                          <td className="fw-bold">{value.subjectCode}</td>
-                          <td className="fw-bold">{value.subject}</td>
-                          <td>{value.seminar}</td>
-                          <td>{value.assignment}</td>
-                          <td>{value.attendence}</td>
-                          <td>{value.internal}</td>
-                          <td>{value.total}</td>
-                        </tr>
-                      );
-                    })}
-                  </>
-                </tbody>
-              </Table>
-
-              {/* <div className="mt-3">
-            <h4>Discliamer</h4>
-            <p></p>
-          </div> */}
-
-              <center>
-                <button className="btn btn-primary m-3" onClick={print}>
-                  Print
-                </button>
-
-                <button
-                  className="btn btn-danger m-3"
-                  onClick={() => {
-                    setHide(false);
-                    setResultShow(false);
-                  }}
-                >
-                  Close
-                </button>
-              </center>
             </>
           )}
-        </>
-      ) : (
-        <></>
-      )}
+        </div>
+      </div>
     </>
   );
 }

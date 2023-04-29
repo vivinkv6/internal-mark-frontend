@@ -3,22 +3,21 @@ import logo from "../assets/scam.png";
 import { useNavigate } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 
-function AdminForm() {
+function AdminForm({ isAdmin, setIsAdmin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
+  // const [isAdmin, setIsAdmin] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   //sampledev@2002
 
   const adminSubmition = async (e) => {
-    console.log("start");
+    setMessage("");
 
     e.preventDefault();
 
     if (username == "" || password == "") {
       setMessage("Please fill all the details");
-      console.log(message);
     } else {
       const checkAdmin = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}api/admin`,
@@ -32,18 +31,15 @@ function AdminForm() {
       )
         .then((res) => res.json())
         .then((data) => {
-          setIsAdmin(data.status);
-          console.log(isAdmin);
-          if (isAdmin) {
+          setIsAdmin((isAdmin) => data.status);
+
+          if (data.status) {
             navigate("selection");
-            console.log("yes");
           } else {
             setMessage("Invalid Username and Password");
           }
-          console.log("mid");
         });
     }
-    console.log("end");
   };
 
   return (

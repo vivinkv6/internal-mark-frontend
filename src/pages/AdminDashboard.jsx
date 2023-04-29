@@ -11,6 +11,7 @@ function AdminDashboard() {
 
   return (
     <div className="container">
+      
       <div
         className="row"
         style={{
@@ -19,27 +20,29 @@ function AdminDashboard() {
           justifyContent: "right",
         }}
       >
-        <div className="mt-5">
-       
+        
+        
+        <div className="mt-2">
+        
+            <Link to="/admin/addresult">
+           
+              <i
+                class="bi bi-plus-circle text-light text-center"
+                style={{ fontSize: "50px",float:'right' }}
+              ></i>
+            </Link>
+            <Link to="/admin/updates">
+             
+              <i class="bi bi-bell text-light" style={{ fontSize: "50px",float:'right',marginRight:'20px' }}></i>
+            </Link>
+         
+         
+        </div>
+        <div >
          <Tables/>
        
         </div>
-        <div>
-          <div style={{ position: "fixed", top: "150px", right: "10px" }}>
-            <Link to="/admin/addresult">
-              <i
-                class="bi bi-plus-circle text-light"
-                style={{ fontSize: "50px" }}
-              ></i>
-            </Link>
-          </div>
-          <div style={{ position: "fixed", top: "150px", right: "80px" }}>
-            <Link to="/admin/updates">
-              {" "}
-              <i class="bi bi-bell text-light" style={{ fontSize: "50px" }}></i>
-            </Link>
-          </div>
-        </div>
+        
       </div>
     </div>
   );

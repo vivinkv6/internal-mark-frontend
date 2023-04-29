@@ -7,6 +7,8 @@ function Tables() {
   const { semester } = useParams();
   const [result, setResult] = useState([]);
   const [errorHandling, setErrorHandling] = useState(false);
+  const date = new Date();
+
   useEffect(() => {
     setErrorHandling(false);
     const data = fetch(
@@ -25,7 +27,7 @@ function Tables() {
 
   return (
     <>
-      <legend className="text-light fw-bold mt-5">
+      <legend className="text-light fw-bold mt-2">
         {department} - {semester}
       </legend>
       <Table responsive="md" border={1} striped bordered hover variant="light">
@@ -37,6 +39,7 @@ function Tables() {
             <th>Semester</th>
             <th>Subject</th>
             <th>Total</th>
+            <th>Date</th>
             <th>Time</th>
             <th>Status</th>
           </tr>
@@ -54,12 +57,19 @@ function Tables() {
                     <td>{value.subject}</td>
                     <td>{value.total}</td>
                     <td>
-                  {formatDistanceToNow(new Date(value.createdAt), {
-                    addSuffix: true,
-                  })}
-                </td>
+                      {date.getDay(value.createdAt)}/
+                      {date.getMonth(value.createdAt)}/
+                      {date.getFullYear(value.createdAt)}
+                    </td>
                     <td>
-                    <Link to={`/${value._id}`}><i className="bi bi-pencil-square fs-2 ms-3 text-dark"></i></Link>  
+                      {formatDistanceToNow(new Date(value.createdAt), {
+                        addSuffix: true,
+                      })}
+                    </td>
+                    <td>
+                      <Link to={`/${value._id}`}>
+                        <i className="bi bi-pencil-square fs-2 ms-3 text-dark"></i>
+                      </Link>
                       <i className="bi bi-trash fs-2 ms-3"></i>
                     </td>
                   </tr>
